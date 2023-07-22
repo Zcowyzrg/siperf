@@ -11,11 +11,12 @@ def print_total(totals):
     last_read = totals[0]
     while running:
         current_read = totals[0]
-        delta =  current_read - last_read
-        if delta > 0:
-            print("Received: {} b/s".format(delta // interval))
+        if (delta := current_read - last_read) > 0:
+            bytes_sec = delta // interval
+            bits_sec = bytes_sec * 8
+            print(f"Received: {bytes_sec:,} B/s ({bits_sec:,} bit/s)")
             last_read = current_read
-        time.sleep(1)
+        time.sleep(interval)
 
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
